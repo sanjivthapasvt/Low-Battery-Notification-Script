@@ -41,18 +41,25 @@ fi
 notify-send "🔧 Installing" "\nSetting up auto start"
 
 #make battery_notify.sh executable
+echo "Making battery.sh executable"
 chmod +x battery_notify.sh
 
 #copy battery_notify.sh to ~/.local/bin
-cp battery_notify.sh ~/.local/bin/
+echo "copying battery_notify.sh to ~/.local/bin"
+mkdir -p ~/.local/bin
+cp -f battery_notify.sh ~/.local/bin/
 
 #create directory for systemd in user home if not already exists
 mkdir -p ~/.config/systemd/user
 
 #copy batter_nofity.service to relevent directory
+echo "copy battery_nofity.service to ~/.config/systemd/user/ directory"
 cp -f battery_notify.service ~/.config/systemd/user/
 
 #enable systemd service we just copied
 systemctl --user daemon-reload
 systemctl --user enable battery_notify.service
 systemctl --user start battery_notify.service
+
+echo "✅ Succesfully installed"
+notify-send "✅ Installed" "\nLow battery notification has been successfully installed"
