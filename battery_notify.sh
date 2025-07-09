@@ -1,7 +1,7 @@
 # send notification if battery < 20% and is not charging
 #!/bin/bash
 
-#variablee to track if notification is already sent so it doesn't spam every 60 sec after batter lwoer than 20%
+#variablee to track if notification is already sent so it doesn't spam every 60 sec after battery lower than 20%
 notified=0
 
 while true; do
