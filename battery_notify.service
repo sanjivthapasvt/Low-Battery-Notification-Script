@@ -1,0 +1,10 @@
+[Unit]
+Description=Low Battery Notification Script
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/bin/battery_notify.sh
+Restart=always
+
+[Install]
+WantedBy=default.target
