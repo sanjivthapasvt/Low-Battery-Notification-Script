@@ -9,33 +9,32 @@ echo "OS family: $ID_LIKE"
 # check if notify-send is already installed
 if command -v notify-send &> /dev/null; then
     echo "✅ notify-send is already installed."
-    exit 0
-fi
-
-echo "📦 notify-send not found. Attempting to install libnotify..."
-
-# install libnotify based on OS family
-if [[ "$ID_LIKE" == *"debian"* || "$ID" == "debian" ]]; then
-    echo "Using apt (Debian family)"
-    sudo apt update && sudo apt install -y libnotify-bin
-elif [[ "$ID_LIKE" == *"rhel"* || "$ID_LIKE" == *"fedora"* || "$ID" == "centos" || "$ID" == "fedora" ]]; then
-    echo "Using dnf (RHEL/Fedora family)"
-    sudo dnf install -y libnotify
-elif [[ "$ID_LIKE" == *"arch"* || "$ID" == "arch" ]]; then
-    echo "Using pacman (Arch family)"
-    sudo pacman -Sy --noconfirm libnotify
 else
-    echo "❌ Unsupported OS family: $ID or $ID_LIKE"
-    exit 1
-fi
+    echo "📦 notify-send not found. Attempting to install libnotify..."
 
-# check again after installation
-if command -v notify-send &> /dev/null; then
-    echo "✅ notify-send installed successfully."
-    notify-send "✅ notify-send installed successfully."
-else
-    echo "❌ Failed to install notify-send."
-    exit 1
+    # install libnotify based on OS family
+    if [[ "$ID_LIKE" == *"debian"* || "$ID" == "debian" ]]; then
+        echo "Using apt (Debian family)"
+        sudo apt update && sudo apt install -y libnotify-bin
+    elif [[ "$ID_LIKE" == *"rhel"* || "$ID_LIKE" == *"fedora"* || "$ID" == "centos" || "$ID" == "fedora" ]]; then
+        echo "Using dnf (RHEL/Fedora family)"
+        sudo dnf install -y libnotify
+    elif [[ "$ID_LIKE" == *"arch"* || "$ID" == "arch" ]]; then
+        echo "Using pacman (Arch family)"
+        sudo pacman -Sy --noconfirm libnotify
+    else
+        echo "❌ Unsupported OS family: $ID or $ID_LIKE"
+        exit 1
+    fi
+
+    # check again after installation
+    if command -v notify-send &> /dev/null; then
+        echo "✅ notify-send installed successfully."
+        notify-send "✅ notify-send installed successfully."
+    else
+        echo "❌ Failed to install notify-send."
+        exit 1
+    fi
 fi
 
 #send notification to tell that script is being installed
